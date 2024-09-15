@@ -16,17 +16,32 @@
     
     <script type="text/javascript">
       $(document).ready(function() {
-          getLocation('1505','mfoolskiosk');
-          getLocation('1878','mfoolskiosk');
+        // Get URL path (assuming the strings are at the end, separated by "/")
+        const urlPath = window.location.pathname;
+        const routeParams = urlPath.split('/'); // Split by "/"
+
+        // Check if there are at least 2 parameters (assuming 2 strings)
+        if (routeParams.length >= 2) {
+          const param1 = routeParams[routeParams.length - 2];
+          const param2 = routeParams[routeParams.length - 1];
+          getLocation(param1, 'mfoolskiosk');
+          getLocation(param2, 'mfoolskiosk');
           setPage();
+        } else {
+          console.error('URL does not contain enough parameters');
+        }
       });
-      $(document).everyTime("121s",function() {
-          setPage();
+
+      $(document).everyTime("121s", function() {
+        setPage();
       });
 
       function setPage() {
-          update('1505', '<< Eastbound','mfoolskiosk');
-          update('1878', 'Westbound >>','mfoolskiosk');
+        // Access parameters from previous code
+        const param1 = routeParams[routeParams.length - 2]; // Assuming same logic
+        const param2 = routeParams[routeParams.length - 1];
+        update(param1, '<< Eastbound', 'mfoolskiosk');
+        update(param2, 'Westbound >>', 'mfoolskiosk');
       }
     </script>
 </head>
