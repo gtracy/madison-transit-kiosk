@@ -15,20 +15,25 @@
     <script type="text/javascript" src="js/kiosk.js"></script>
     
     <script type="text/javascript">
+      let urlParams;
       $(document).ready(function() {
-        // Get URL path (assuming the strings are at the end, separated by "/")
-        const urlPath = window.location.pathname;
-        const routeParams = urlPath.split('/'); // Split by "/"
+        urlParams = new URLSearchParams(window.location.search);
+        if( !urlParams ) {
+          console.log('missing urlParams?!?!')
+          console.log(window.location.search);
+          return;
+        }
 
-        // Check if there are at least 2 parameters (assuming 2 strings)
-        if (routeParams.length >= 2) {
-          const param1 = routeParams[routeParams.length - 2];
-          const param2 = routeParams[routeParams.length - 1];
-          getLocation(param1, 'mfoolskiosk');
-          getLocation(param2, 'mfoolskiosk');
+        // Get parameters from query string
+        const leftStop = urlParams.get('left');
+        const rightStop = urlParams.get('right');
+
+        if (leftStop && rightStop) {
+          getLocation(leftStop);
+          getLocation(rightStop);
           setPage();
         } else {
-          console.error('URL does not contain enough parameters');
+          console.error('URL does not contain required parameters');
         }
       });
 
@@ -38,10 +43,12 @@
 
       function setPage() {
         // Access parameters from previous code
-        const param1 = routeParams[routeParams.length - 2]; // Assuming same logic
-        const param2 = routeParams[routeParams.length - 1];
-        update(param1, '<< Eastbound', 'mfoolskiosk');
-        update(param2, 'Westbound >>', 'mfoolskiosk');
+        const leftStop = urlParams.get('left');
+        const leftLabel = (urlParams.get('leftLabel')) ? urlParams.get('leftLabel') : '';
+        const rightStop = urlParams.get('right');
+        const rightLabel = (urlParams.get('rightLabel')) ? urlParams.get('rightLabel') : '';
+        update(leftStop, leftLabel, 'left');
+        update(rightStop, rightLabel, 'right');
       }
     </script>
 </head>
@@ -54,10 +61,10 @@
 <div class="colmask doublepage">
 	<div class="colleft">
 		<div class="col1">
-            <div class="estimates" id="1505-estimates">stuff</div>
+            <div class="estimates" id="left-estimates">stuff</div>
 		</div>
 		<div class="col2">
-           <div class="estimates" id="1878-estimates">stuff</div>
+           <div class="estimates" id="right-estimates">stuff</div>
 		</div>
 	</div>
 </div>
