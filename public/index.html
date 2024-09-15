@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="A real-time kiosk showing nearby bus arrivals near Mother Fools.">
+    <meta name="keywords" content="madison metro,bus schedule,smsmybus,mother fools">
+    <title>Mother Fools Madison Metro Monitor by SMSmybus</title>
+
+	  <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	  <meta name="robots" content="index, follow" />
+	  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <link href="css/kiosk.css" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> 
+    <script type="text/javascript" src="js/jquery.timers-1.2.js"></script>
+    <script type="text/javascript" src="js/kiosk.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+          getLocation('1505','mfoolskiosk');
+          getLocation('1878','mfoolskiosk');
+          setPage();
+      });
+      $(document).everyTime("121s",function() {
+          setPage();
+      });
+
+      function setPage() {
+          update('1505', '<< Eastbound','mfoolskiosk');
+          update('1878', 'Westbound >>','mfoolskiosk');
+      }
+    </script>
+</head>
+<body>
+
+<div id="header">
+  <img align="center" src="img/MF-100.png" height="70" width="100" /> Madison Metro Monitor <img align="center" src="img/madison_metro.png" alt="Madison Metro" height="70">
+  <div id="clock">clock</div>
+</div>
+<div class="colmask doublepage">
+	<div class="colleft">
+		<div class="col1">
+            <div class="estimates" id="1505-estimates">stuff</div>
+		</div>
+		<div class="col2">
+           <div class="estimates" id="1878-estimates">stuff</div>
+		</div>
+	</div>
+</div>
+<div id="footer">
+   <div id="powered-by">
+     SMSMyBus API & Madison Metro
+   </div>
+
+   <div id="me">
+    Steve Faulkner - this kiosk - <a href="https://twitter.com/southpolesteve">@southpolesteve</a><br>
+    Preston Austin - this interface - <a href=https://twitter.com/gl33p>@gl33p</a><br>
+    Greg Tracy
+   </div>
+  
+   <div id="contact-container">
+   </div>
+</div>
+
+</body>
+</html>
